@@ -56,5 +56,3 @@ final class SimpleHttpClient
         return $this->responseBody;
     }
 }
-
-// "{"number":{},"scheme":"visa","type":"debit","brand":"Visa Classic","country":{"numeric":"208","alpha2":"DK","name":"Denmark","emoji":"🇩🇰","currency":"DKK","latitude":56,"longitude":10},"bank":{"name":"Jyske Bank A/S"}}"

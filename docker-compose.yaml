@@ -12,3 +12,5 @@ services:
         volumes:
             - ./source:/var/www/app
             - ./.logs/php:/var/log/php
+        environment:
+            - PROVIDER_API_ACCESS_KEY=${PROVIDER_API_ACCESS_KEY}
