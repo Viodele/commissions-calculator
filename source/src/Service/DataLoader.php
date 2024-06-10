@@ -43,7 +43,7 @@ final class DataLoader
     {
         if (true === empty($this->parameters[1])) {
             throw new DataException(
-                'Specify the file with data to process. Usage: `$ php calculate.php input.txt`.'
+                'Specify the file with data to process. Usage: `$ php calculate input.txt`.'
             );
         }
 

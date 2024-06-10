@@ -50,18 +50,7 @@ readonly class Application
                 $this->binDataProvider->getCountryCode($row->getBin())
             );
 
-            echo sprintf(
-                'Country [%s] : Currency Code [%s] : Bin [%s] : Rate [%s] : Commission [%f] : Fixed [%f] : Fee [%f]' . PHP_EOL,
-                $countryCode,
-                $row->getCurrency(),
-                $row->getBin(),
-                $this->currencyRatesProvider->getRate($row->getCurrency()),
-                $commission,
-                $fixedAmount,
-                $this->feeProvider->getFeeByCountryCode(
-                    $this->binDataProvider->getCountryCode($row->getBin())
-                )
-            );
+            echo $commission . PHP_EOL;
         }
     }
 }
