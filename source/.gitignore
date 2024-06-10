@@ -3,3 +3,6 @@
 
 bin/*
 !bin/calculate
+
+/.phpcs-cache
+/phpcs.xml.dist

@@ -88,11 +88,13 @@ final class DataLoader
         }
 
         $intersectRequiredKeys = count(array_intersect_key(array_flip(self::REQUIRED_KEYS), $lineData));
-        if ($intersectRequiredKeys === count(self::REQUIRED_KEYS)) {
-            $this->data[] = (new DataDTO())
-                ->setBin(strval($lineData['bin']))
-                ->setAmount(floatval($lineData['amount']))
-                ->setCurrency(strval($lineData['currency']));
+        if (count(self::REQUIRED_KEYS) !== $intersectRequiredKeys) {
+            return;
         }
+
+        $this->data[] = (new DataDTO())
+            ->setBin(strval($lineData['bin']))
+            ->setAmount(floatval($lineData['amount']))
+            ->setCurrency(strval($lineData['currency']));
     }
 }

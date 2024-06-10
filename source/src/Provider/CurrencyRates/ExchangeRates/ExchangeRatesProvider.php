@@ -9,6 +9,7 @@ use App\Service\SimpleHttpClient;
 final class ExchangeRatesProvider implements CurrencyRatesProviderInterface
 {
     private const PROVIDER_API_URL = 'http://api.exchangeratesapi.io/latest';
+
     private ?array $rates = null;
 
     /**

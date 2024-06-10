@@ -2,7 +2,6 @@
 
 namespace App;
 
-use App\DTO\DataDTO;
 use App\Exception\DataException;
 use App\Provider\BinData\BinDataProviderInterface;
 use App\Provider\CurrencyRates\CurrencyRatesProviderInterface;
@@ -12,6 +11,7 @@ use App\Service\DataLoader;
 readonly class Application
 {
     public const BASE_CURRENCY_CODE = 'EUR';
+
     private BinDataProviderInterface $binDataProvider;
     private CurrencyRatesProviderInterface $currencyRatesProvider;
     private DataLoader $dataLoader;
@@ -20,10 +20,17 @@ readonly class Application
     public function __construct(
         private array $configuration = []
     ) {
-        $this->binDataProvider = new $this->configuration['binDataProvider']();
-        $this->currencyRatesProvider = new $this->configuration['currencyRatesProvider']();
-        $this->dataLoader = new $this->configuration['dataLoader']();
-        $this->feeProvider = new $this->configuration['feeProvider']();
+        $binDataProvider = $this->configuration['binDataProvider'];
+        $this->binDataProvider = new $binDataProvider();
+
+        $currencyRatesProvider = $this->configuration['currencyRatesProvider'];
+        $this->currencyRatesProvider = new $currencyRatesProvider();
+
+        $dataLoader = $this->configuration['dataLoader'];
+        $this->dataLoader = new $dataLoader();
+
+        $feeProvider = $this->configuration['feeProvider'];
+        $this->feeProvider = new $feeProvider();
     }
 
     /**
@@ -31,14 +38,12 @@ readonly class Application
      */
     public function execute(): void
     {
-        /** @var $rows DataDTO[] */
         $rows = $this->dataLoader->getData();
         foreach ($rows as $row) {
-            $countryCode = $this->binDataProvider->getCountryCode($row->getBin()); // TODO: Remove me
             $exchangeRate = $this->currencyRatesProvider->getRate($row->getCurrency());
 
             if (
-                self::BASE_CURRENCY_CODE == $row->getCurrency()
+                self::BASE_CURRENCY_CODE === $row->getCurrency()
                 || 0.0 === $exchangeRate
             ) {
                 $fixedAmount = $row->getAmount();
