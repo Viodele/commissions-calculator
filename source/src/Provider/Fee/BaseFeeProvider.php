@@ -2,8 +2,6 @@
 
 namespace App\Provider\Fee;
 
-use App\Provider\Fee\FeeProviderInterface;
-
 class BaseFeeProvider implements FeeProviderInterface
 {
     private const FEE_MAPPING = [

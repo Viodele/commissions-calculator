@@ -37,3 +37,13 @@ To execute the Calculator run:
 ```bash
 docker exec -i cc_php /bin/sh -c "php bin/calculate input.txt"
 ```
+
+### Running Tests
+To launch static code analysis run:
+```shell
+make test 
+```
+or
+```shell
+docker exec -it cc_php bin/phpcs --standard=phpcs.xml -s -p -w
+```

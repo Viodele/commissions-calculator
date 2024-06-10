@@ -4,19 +4,21 @@ namespace App\Service;
 
 final class SimpleHttpClient
 {
-    private static ?SimpleHttpClient $_instance = null;
-    private ?string $responseBody =  null;
+    private static ?SimpleHttpClient $instance = null;
+    private ?string $responseBody = null;
     private int $statusCode = 0;
 
-    private function __construct() {}
+    private function __construct()
+    {
+    }
 
     public static function create(): SimpleHttpClient
     {
-        if (null === self::$_instance) {
-            self::$_instance = new SimpleHttpClient();
+        if (null === self::$instance) {
+            self::$instance = new SimpleHttpClient();
         }
 
-        return self::$_instance;
+        return self::$instance;
     }
 
     public function submit(string $method, string $url, ?string $body = null, array $headers = []): void
@@ -41,9 +43,11 @@ final class SimpleHttpClient
         ]);
 
         $this->responseBody = file_get_contents($url, false, $context);
-        if (true === (bool)preg_match('/HTTP\/\S*\s(\d+)/', $http_response_header[0], $matches)) {
-            $this->statusCode = intval($matches[1]);
+        if (true !== (bool) preg_match('/HTTP\/\S*\s(\d+)/', $http_response_header[0], $matches)) {
+            return;
         }
+
+        $this->statusCode = intval($matches[1]);
     }
 
     public function getStatusCode(): int
