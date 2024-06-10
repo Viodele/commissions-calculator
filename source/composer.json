@@ -21,6 +21,7 @@
   "require-dev": {
     "dealerdirect/phpcodesniffer-composer-installer": "^1.0",
     "escapestudios/symfony2-coding-standard": "^3.13",
+    "phpunit/phpunit": "^11.2",
     "slevomat/coding-standard": "^8.15"
   }
 }

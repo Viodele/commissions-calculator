@@ -8,7 +8,7 @@ use App\Provider\CurrencyRates\CurrencyRatesProviderInterface;
 use App\Provider\Fee\FeeProviderInterface;
 use App\Service\DataLoader;
 
-readonly class Application
+final readonly class Application
 {
     public const BASE_CURRENCY_CODE = 'EUR';
 

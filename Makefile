@@ -8,3 +8,6 @@ composer:
 
 test:
 	docker exec -it cc_php bin/phpcs --standard=phpcs.xml -s -p -w
+
+cli:
+	docker exec -it cc_php /bin/sh
