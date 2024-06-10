@@ -1,0 +1,14 @@
+version: '3.8'
+
+services:
+    php-fpm:
+        container_name: cc_php
+        build:
+            context: .docker/php-fpm
+            dockerfile: Dockerfile
+        tty: true
+        ports:
+            - '9000:9000'
+        volumes:
+            - ./source:/var/www/app
+            - ./.logs/php:/var/log/php
