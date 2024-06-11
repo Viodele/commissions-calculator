@@ -5,5 +5,18 @@ use App\Application;
 
 require_once dirname(__DIR__) . '/vendor/autoload.php';
 
-$app = new Application(configuration: require dirname(__DIR__) . '/config/config.php');
-$app->execute();
+$configuration = require dirname(__DIR__) . '/config/config.php';
+
+$binDataProvider = $configuration['binDataProvider'];
+$currencyRatesProvider = $configuration['currencyRatesProvider'];
+$dataLoader = $configuration['dataLoader'];
+$feeProvider = $configuration['feeProvider'];
+
+$app = new Application(
+    binDataProvider: new $binDataProvider(),
+    currencyRatesProvider: new $currencyRatesProvider(),
+    dataLoader: new $dataLoader(),
+    feeProvider: new $feeProvider()
+);
+$results = $app->calculate();
+echo implode(PHP_EOL, $results) . PHP_EOL;

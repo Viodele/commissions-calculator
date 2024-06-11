@@ -6,3 +6,5 @@ bin/*
 
 /.phpcs-cache
 /phpcs.xml.dist
+
+/.phpunit.result.cache

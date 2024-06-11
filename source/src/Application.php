@@ -12,32 +12,21 @@ final readonly class Application
 {
     public const BASE_CURRENCY_CODE = 'EUR';
 
-    private BinDataProviderInterface $binDataProvider;
-    private CurrencyRatesProviderInterface $currencyRatesProvider;
-    private DataLoader $dataLoader;
-    private FeeProviderInterface $feeProvider;
-
     public function __construct(
-        private array $configuration = []
+        private BinDataProviderInterface $binDataProvider,
+        private CurrencyRatesProviderInterface $currencyRatesProvider,
+        private DataLoader $dataLoader,
+        private FeeProviderInterface $feeProvider
     ) {
-        $binDataProvider = $this->configuration['binDataProvider'];
-        $this->binDataProvider = new $binDataProvider();
-
-        $currencyRatesProvider = $this->configuration['currencyRatesProvider'];
-        $this->currencyRatesProvider = new $currencyRatesProvider();
-
-        $dataLoader = $this->configuration['dataLoader'];
-        $this->dataLoader = new $dataLoader();
-
-        $feeProvider = $this->configuration['feeProvider'];
-        $this->feeProvider = new $feeProvider();
     }
 
     /**
      * @throws DataException
      */
-    public function execute(): void
+    public function calculate(): array
     {
+        $results = [];
+
         $rows = $this->dataLoader->getData();
         foreach ($rows as $row) {
             $exchangeRate = $this->currencyRatesProvider->getRate($row->getCurrency());
@@ -51,11 +40,11 @@ final readonly class Application
                 $fixedAmount = $row->getAmount() / $exchangeRate;
             }
 
-            $commission = $fixedAmount * $this->feeProvider->getFeeByCountryCode(
+            $results[] = round($fixedAmount * $this->feeProvider->getFeeByCountryCode(
                 $this->binDataProvider->getCountryCode($row->getBin())
-            );
-
-            echo $commission . PHP_EOL;
+            ), 2);
         }
+
+        return $results;
     }
 }
