@@ -26,6 +26,8 @@ final class DataLoader
 
     /**
      * @throws DataException
+     *
+     * @return DataDTO[]
      */
     public function getData(): array
     {

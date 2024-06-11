@@ -11,6 +11,11 @@
       "App\\": "src/"
     }
   },
+  "autoload-dev": {
+    "psr-4": {
+      "Test\\": "tests/"
+    }
+  },
   "config": {
     "sort-packages": true,
     "bin-dir": "bin",
@@ -20,7 +25,9 @@
   },
   "require-dev": {
     "dealerdirect/phpcodesniffer-composer-installer": "^1.0",
+    "dg/bypass-finals": "^1.7",
     "escapestudios/symfony2-coding-standard": "^3.13",
+    "phpunit/phpunit": "^11.2",
     "slevomat/coding-standard": "^8.15"
   }
 }

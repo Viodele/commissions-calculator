@@ -2,7 +2,7 @@
 
 namespace App\Provider\Fee;
 
-class BaseFeeProvider implements FeeProviderInterface
+final class BaseFeeProvider implements FeeProviderInterface
 {
     private const FEE_MAPPING = [
         [
