@@ -12,11 +12,11 @@ $currencyRatesProvider = $configuration['currencyRatesProvider'];
 $dataLoader = $configuration['dataLoader'];
 $feeProvider = $configuration['feeProvider'];
 
-$app = new Application(
+$results = (new Application(
     binDataProvider: new $binDataProvider(),
     currencyRatesProvider: new $currencyRatesProvider(),
     dataLoader: new $dataLoader(),
     feeProvider: new $feeProvider()
-);
-$results = $app->calculate();
+))->calculate();
+
 echo implode(PHP_EOL, $results) . PHP_EOL;
