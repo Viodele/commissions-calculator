@@ -1,7 +1,7 @@
 ## Commissions Calculator
 
 ### Setup
-To be able to use exchangeratesapi.io as currency rates provider add your security token before launching a container
+To be able to use exchangeratesapi.io as a currency rates provider add your security token before launching a container:
 ```shell
 echo PROVIDER_API_ACCESS_KEY=your_security_code >> .env
 ```
@@ -41,9 +41,13 @@ docker exec -i cc_php /bin/sh -c "php bin/calculate input.txt"
 ### Running Tests
 To launch static code analysis run:
 ```shell
-make test 
-```
-or
-```shell
 docker exec -it cc_php bin/phpcs --standard=phpcs.xml -s -p -w
+```
+To launch PHPUnit tests run:
+```shell
+docker exec -it cc_php bin/phpunit tests/
+```
+To execute all tests together run:
+```shell
+make test
 ```
