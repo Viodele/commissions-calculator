@@ -22,6 +22,11 @@ final class ExchangeRatesProvider implements CurrencyRatesProviderInterface
         return $this->rates[$currencyCode] ?? null;
     }
 
+    private function getAccessKey(): string
+    {
+        return (string) getenv('PROVIDER_API_ACCESS_KEY');
+    }
+
     /**
      * @throws ExchangeRatesException
      */
@@ -35,7 +40,7 @@ final class ExchangeRatesProvider implements CurrencyRatesProviderInterface
         $client->submit('GET', sprintf(
             '%s?access_key=%s',
             self::PROVIDER_API_URL,
-            getenv('PROVIDER_API_ACCESS_KEY')
+            $this->getAccessKey()
         ));
 
         if (200 !== $client->getStatusCode()) {
@@ -49,6 +54,10 @@ final class ExchangeRatesProvider implements CurrencyRatesProviderInterface
 
         if (JSON_ERROR_NONE !== json_last_error()) {
             throw new ExchangeRatesException('Unable to deserialize response.');
+        }
+
+        if (true === isset($response['error']['type']) && 'invalid_access_key' === $response['error']['type']) {
+            throw new ExchangeRatesException('Wrong access key.');
         }
 
         if (false === isset($response['rates']) || false === is_array($response['rates'])) {

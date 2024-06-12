@@ -1,5 +1,14 @@
 ## Commissions Calculator
 
+### Annotation
+Let's begin from general problems. Both API's used in project are inaccessible on freemium model. Talking about `binlist.net` it provides 5 free requests per hour and works unpredictable that could be an issue when you try to cover it with integration tests.
+
+In the project, function `isEu` was removed completely and replaced by `BaseFeeProvider` class to provide us with ability to add different fees dependent on region.
+
+All providers have interfaces so the code could be extended due to SOLID standards. You can implement another provider by modifying `config/config.php` file.
+
+The idea was to avoid using third-party packages and make this demo as pure as it could be.
+
 ### Setup
 To be able to use exchangeratesapi.io as a currency rates provider add your security token before launching a container:
 ```shell
